@@ -1,5 +1,6 @@
 import * as PIXI from "pixi.js";
 import EmbossFilter from "./Filters/EmbossFilter";
+import NormalFilter from "./Filters/NormalFilter";
 
 const canvas = document.querySelector("canvas");
 
@@ -17,6 +18,7 @@ const convert = document.getElementById("convert");
 const heightInput = document.getElementById("heightInput");
 const heightSlider = document.getElementById("heightSlider");
 let embossStrength = 5;
+let normalStrength = 1;
 
 button.addEventListener("change", () => {
   if (button.files && button.files[0]) {
@@ -46,7 +48,7 @@ function createHeightMap(texture) {
 	console.log(embossStrength);
 	if (app.stage.children.length === 1) app.stage.children.pop();
 	imgSprite = new PIXI.Sprite(texture);
-	imgSprite.filters = [new EmbossFilter(embossStrength)];
+	imgSprite.filters = [new EmbossFilter(embossStrength), new NormalFilter(normalStrength)];
 	app.stage.addChild(imgSprite);
 }
 
