@@ -1,6 +1,9 @@
 import * as PIXI from "pixi.js";
+import 'pixi-layers';
+import 'pixi-lights';
 import EmbossFilter from "./Filters/EmbossFilter";
 import NormalFilter from "./Filters/NormalFilter";
+import { createAppStage, createPair } from './preview';
 
 const canvas = document.querySelector("canvas");
 
@@ -18,6 +21,7 @@ const button = document.getElementById("upload_btn");
 const convert = document.getElementById("convert");
 const heightInput = document.getElementById("heightInput");
 const heightSlider = document.getElementById("heightSlider");
+const previewBtn = document.getElementById("preview");
 let embossStrength = 5;
 let normalStrength = 1;
 
@@ -83,4 +87,19 @@ convert.addEventListener("click", () => {
     downloadAsImage(app.renderer, imgSprite, `normalmap${Date.now()}`);
   }
 });
+
+previewBtn.onclick = () => {
+  if(texture && imgSprite){
+    app.destroy();
+    const previewApp = createAppStage();
+    const light = new PIXI.lights.PointLight(0xffffff,1);
+    const pair = createPair(texture, imgSprite);
+    pair.position.set(300,300);
+    light.position.set(525, 160);
+    previewApp.stage.addChild(pair);
+    previewApp.stage.addChild(light);
+    previewApp.stage.addChild(new PIXI.lights.AmbientLight(null, 0.4));
+
+  }
+}
 
