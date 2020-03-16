@@ -4,9 +4,7 @@ const path = require("path");
 
 module.exports = merge(common, {
   devServer: {
-    historyApiFallback: {
-      index: 'index.html'
-    },
+    contentPath: path.join(__dirname, 'dist'),
     compress: true,
     port: 9000
   },
